@@ -1,24 +1,29 @@
 package vn.edu.tnut.btvn_android_26_12_k215480106120;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        WebView webView = findViewById(R.id.main_view);
+
+        // Cấu hình WebView
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true); // Kích hoạt JavaScript nếu cần
+
+        // Đảm bảo nội dung hiển thị trong WebView thay vì mở trình duyệt
+        webView.setWebViewClient(new WebViewClient());
+
+        // Tải tệp HTML từ thư mục assets
+        webView.loadUrl("file:///android_asset/index.html");
     }
 }
